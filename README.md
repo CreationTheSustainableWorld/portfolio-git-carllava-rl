@@ -69,6 +69,9 @@ text
      Policy Head (MLP)
          ↓
   Discrete Action (0–4)
+
+---
+
 Action labels:
 
 0: Nothing
