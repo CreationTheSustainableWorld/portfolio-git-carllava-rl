@@ -9,11 +9,11 @@ to train an agent that understands visual scenes and outputs driving actions.
 
 ## 📌 Overview
 
-- 🔍 **Input**: RGB image of driving environment + fixed natural language prompt
-- 🧠 **Backbone**: `microsoft/git-base` (Vision-Language model)
-- 🛠 **Fine-Tuning**: LoRA (Low-Rank Adaptation) on image-action descriptions
-- 🎯 **Action Prediction**: Lightweight `policy_head` trained with PPO
-- 🚙 **Environment**: `CarRacing-v2` from OpenAI Gymnasium
+- 🔍 **Input**: RGB image of driving environment + fixed natural language prompt  
+- 🧠 **Backbone**: `microsoft/git-base` (Vision-Language model)  
+- 🛠 **Fine-Tuning**: LoRA (Low-Rank Adaptation) on image-action descriptions  
+- 🎯 **Action Prediction**: Lightweight `policy_head` trained with PPO  
+- 🚙 **Environment**: `CarRacing-v2` from OpenAI Gymnasium  
 
 ---
 
@@ -40,26 +40,32 @@ to train an agent that understands visual scenes and outputs driving actions.
 
 ```bash
 pip install -r requirements.txt
-2. Prepare training data (if not already collected)
-bash
-コピーする
-編集する
+```
+
+### 2. Prepare training data (if not already collected)
+
+```bash
 python train_data_collect.py
 python convert_to_jsonl.py
-3. Fine-tune the captioning model with LoRA
-bash
-コピーする
-編集する
+```
+
+### 3. Fine-tune the captioning model with LoRA
+
+```bash
 python train_caption_lora.py
-4. Train the policy head with reinforcement learning
-bash
-コピーする
-編集する
+```
+
+### 4. Train the policy head with reinforcement learning
+
+```bash
 python train_policy_head.py
-🧠 Model Architecture
-scss
-コピーする
-編集する
+```
+
+---
+
+## 🧠 Model Architecture
+
+```
 [RGB Image] + [Prompt]
          ↓
    Git Vision-Language Encoder
@@ -69,34 +75,45 @@ scss
      Policy Head (MLP)
          ↓
   Discrete Action (0–4)
-Action labels
+```
 
-ID	Action
-0	Nothing
-1	Accelerate
-2	Turn Left
-3	Turn Right
-4	Brake
-📈 Highlights
-✅ Gitを活用した視覚・言語融合による状況理解
+### Action Labels
 
-✅ LoRAを使った軽量なファインチューニング
+| ID | Action     |
+|----|------------|
+| 0  | Nothing    |
+| 1  | Accelerate |
+| 2  | Turn Left  |
+| 3  | Turn Right |
+| 4  | Brake      |
 
-✅ 強化学習（PPO）による行動選択最適化
+---
 
-✅ 自動運転のようなビジョン→アクションへの流れを再現
+## 📈 Highlights
 
-🔗 Related Work
-CarLLaVA (2024)
+- ✅ Gitを活用した視覚・言語融合による状況理解  
+- ✅ LoRAを使った軽量なファインチューニング  
+- ✅ 強化学習〈PPO〉による行動選択最適化  
+- ✅ 自動運転のようなビジョン→アクションへの流れを再現  
 
-LoRA: Low-Rank Adaptation
+---
 
-Git by Microsoft
+## 🔗 Related Work
 
-👤 Author
-Created by Daiki Matsuba
-GitHub: github.com/CreationTheSustainableWorld
-Portfolio: https://sites.google.com/view/job-application-portfolio
+- [CarLLaVA (2024)](https://arxiv.org/abs/2406.10165)
+- [LoRA: Low-Rank Adaptation](https://arxiv.org/abs/2106.09685)
+- [Git by Microsoft](https://huggingface.co/microsoft/git-base)
 
-📝 License
+---
+
+## 👤 Author
+
+Created by **Daiki Matsuba**  
+GitHub: [github.com/CreationTheSustainableWorld](https://github.com/CreationTheSustainableWorld)  
+Portfolio: [https://sites.google.com/view/job-application-portfolio](https://sites.google.com/view/job-application-portfolio)
+
+---
+
+## 📍 License
+
 This project is licensed under the MIT License.
