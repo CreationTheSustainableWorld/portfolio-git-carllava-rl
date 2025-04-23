@@ -19,18 +19,18 @@ to train an agent that understands visual scenes and outputs driving actions.
 
 ## 🗂 Project Structure
 
-| File/Dir | Description |
-|----------|-------------|
-| `train_caption_lora.py` | LoRA-based caption fine-tuning on Git |
-| `git_rl_carllava_model.py` | Git model with added policy head (action predictor) |
-| `train_policy_head.py` | PPO training on policy head using CarRacing-v2 |
-| `train_data_collect.py` | Generates image + action caption pairs for pretraining |
-| `train_data_collector_model.py` | Model used for data collection |
-| `convert_to_jsonl.py` | Converts CSV to JSONL for caption training |
-| `dataset.py` | Hugging Face Dataset loader for caption training |
-| `policy_head_rl_latest.pth` | Trained RL policy head (PPO) |
+| File/Dir                          | Description |
+|----------------------------------|-------------|
+| `train_caption_lora.py`          | LoRA-based caption fine-tuning on Git |
+| `git_rl_carllava_model.py`       | Git model with added policy head (action predictor) |
+| `train_policy_head.py`           | PPO training on policy head using CarRacing-v2 |
+| `train_data_collect.py`          | Generates image + action caption pairs for pretraining |
+| `train_data_collector_model.py`  | Model used for data collection |
+| `convert_to_jsonl.py`            | Converts CSV to JSONL for caption training |
+| `dataset.py`                     | Hugging Face Dataset loader for caption training |
+| `policy_head_rl_latest.pth`      | Trained RL policy head (PPO) |
 | `lora_git_caption_model_carllava/` | Saved LoRA fine-tuned Git model |
-| `CarRacing-Data/` | Collected training data (images + actions) |
+| `CarRacing-Data/`                | Collected training data (images + actions) |
 
 ---
 
@@ -57,7 +57,7 @@ bash
 編集する
 python train_policy_head.py
 🧠 Model Architecture
-text
+scss
 コピーする
 編集する
 [RGB Image] + [Prompt]
@@ -69,21 +69,14 @@ text
      Policy Head (MLP)
          ↓
   Discrete Action (0–4)
+Action labels
 
----
-
-Action labels:
-
-0: Nothing
-
-1: Accelerate
-
-2: Turn Left
-
-3: Turn Right
-
-4: Brake
-
+ID	Action
+0	Nothing
+1	Accelerate
+2	Turn Left
+3	Turn Right
+4	Brake
 📈 Highlights
 ✅ Gitを活用した視覚・言語融合による状況理解
 
@@ -99,3 +92,11 @@ CarLLaVA (2024)
 LoRA: Low-Rank Adaptation
 
 Git by Microsoft
+
+👤 Author
+Created by Daiki Matsuba
+GitHub: github.com/CreationTheSustainableWorld
+Portfolio: https://sites.google.com/view/job-application-portfolio
+
+📝 License
+This project is licensed under the MIT License.
