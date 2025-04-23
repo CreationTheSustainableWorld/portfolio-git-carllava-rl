@@ -1,83 +1,98 @@
-# 🧠 CarLLaVA-RL: Vision-Language Guided Reinforcement Learning with LoRA
+# 🚗 CarLLaVA-Style Vision-to-Action Model for Autonomous Driving
 
-This project demonstrates how to use a LoRA-fine-tuned vision-language model (Git) in the style of CarLLaVA to guide reinforcement learning (PPO) in the [CarRacing-v2](https://www.gymlibrary.dev/environments/box2d/car_racing/) environment.
-
----
-
-## 🚗 Overview
-
-We leverage the Git vision-language model and fine-tune it using a small dataset of driving scenarios paired with natural language action descriptions like:
-
-> What should the vehicle do in this scenario? → "Turn left" / "Accelerate" / "Brake"
-
-Once trained, the model is used as a policy in a PPO loop to learn autonomous driving behavior in a simulated environment.
+This project demonstrates a vision-language-to-action learning framework  
+inspired by [CarLLaVA](https://arxiv.org/abs/2406.10165),  
+combining Git (Generative Image-to-Text Transformer), LoRA fine-tuning, and Reinforcement Learning (PPO)  
+to train an agent that understands visual scenes and outputs driving actions.
 
 ---
 
-## 🧱 Project Structure
+## 📌 Overview
 
-carllava-rl/ ├── train_git_lora_carllava_style.py # LoRA fine-tuning with fixed prompts ├── ppo_git_with_prompt.py # Reinforcement Learning with PPO ├── GitText2ActionWithPrompt.py # Model class: Git + Prompt + Policy head ├── CarRacing-Data/ # Collected caption dataset ├── lora_git_caption_model_carllava/ # Fine-tuned Git model ├── results/ # Training graphs and videos └── README.md
-
-yaml
-コピーする
-編集する
-
----
-
-## 📊 Performance
-
-| Epoch | Avg Loss (LoRA) | Total Reward (PPO) |
-|-------|------------------|--------------------|
-| 1     | 8.59             | -28.3              |
-| 2     | 8.11             | -11.8              |
-| 3     | 8.06             | +22.6 🚀           |
-
-### Reward Curve
-
-![Reward Curve](results/reward_curve.png)
+- 🔍 **Input**: RGB image of driving environment + fixed natural language prompt
+- 🧠 **Backbone**: `microsoft/git-base` (Vision-Language model)
+- 🛠 **Fine-Tuning**: LoRA (Low-Rank Adaptation) on image-action descriptions
+- 🎯 **Action Prediction**: Lightweight `policy_head` trained with PPO
+- 🚙 **Environment**: `CarRacing-v2` from OpenAI Gymnasium
 
 ---
 
-## 🎮 Demo (Video)
+## 🗂 Project Structure
 
-> Below is the video of the trained agent using the Git model with natural language prompts:
-
-https://user-images.githubusercontent.com/your-username/video_episode_10.mp4
-
----
-
-## 🔧 Key Features
-
-- 🔁 **Caption Collection**: From trained policy (image → natural language)
-- 🧠 **LoRA Fine-tuning**: Git model fine-tuned on small caption dataset
-- 🤖 **Prompt-guided RL**: "What should the vehicle do in this scenario?" as fixed input prompt
-- 🏎️ **Control Output**: Logits for discrete driving actions (no-op, accelerate, left, right, brake)
-
----
-
-## 🚀 Performance Improvements
-
-The following changes improved the training performance significantly:
-
-- ✅ Return normalization
-- ✅ Dropout & hidden layer expansion in policy head
-- ✅ Clipped rewards for stability
-- ✅ Multiple PPO epochs (`K_EPOCHS = 5`)
+| File/Dir | Description |
+|----------|-------------|
+| `train_caption_lora.py` | LoRA-based caption fine-tuning on Git |
+| `git_rl_carllava_model.py` | Git model with added policy head (action predictor) |
+| `train_policy_head.py` | PPO training on policy head using CarRacing-v2 |
+| `train_data_collect.py` | Generates image + action caption pairs for pretraining |
+| `train_data_collector_model.py` | Model used for data collection |
+| `convert_to_jsonl.py` | Converts CSV to JSONL for caption training |
+| `dataset.py` | Hugging Face Dataset loader for caption training |
+| `policy_head_rl_latest.pth` | Trained RL policy head (PPO) |
+| `lora_git_caption_model_carllava/` | Saved LoRA fine-tuned Git model |
+| `CarRacing-Data/` | Collected training data (images + actions) |
 
 ---
 
-## 💾 Setup
+## 🚀 Getting Started
 
-You can install dependencies using conda:
+### 1. Install dependencies
 
 ```bash
-conda env create -f environment.yml
-conda activate carllava-rl
-Or use requirements.txt.
+pip install -r requirements.txt
+2. Prepare training data (if not already collected)
+bash
+コピーする
+編集する
+python train_data_collect.py
+python convert_to_jsonl.py
+3. Fine-tune the captioning model with LoRA
+bash
+コピーする
+編集する
+python train_caption_lora.py
+4. Train the policy head with reinforcement learning
+bash
+コピーする
+編集する
+python train_policy_head.py
+🧠 Model Architecture
+text
+コピーする
+編集する
+[RGB Image] + [Prompt]
+         ↓
+   Git Vision-Language Encoder
+         ↓
+   [CLS] Token Embedding
+         ↓
+     Policy Head (MLP)
+         ↓
+  Discrete Action (0–4)
+Action labels:
 
-📚 References
-CarLLaVA (arXiv)
+0: Nothing
 
-Git Model (Hugging Face)
+1: Accelerate
 
-LoRA (PEFT)
+2: Turn Left
+
+3: Turn Right
+
+4: Brake
+
+📈 Highlights
+✅ Gitを活用した視覚・言語融合による状況理解
+
+✅ LoRAを使った軽量なファインチューニング
+
+✅ 強化学習（PPO）による行動選択最適化
+
+✅ 自動運転のようなビジョン→アクションへの流れを再現
+
+🔗 Related Work
+CarLLaVA (2024)
+
+LoRA: Low-Rank Adaptation
+
+Git by Microsoft
